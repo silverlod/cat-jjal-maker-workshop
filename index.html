@@ -53,10 +53,10 @@
       );
     }
     const Favorites = () => {
+      const cats = [CAT1, CAT2, CAT3]
       return (
         <ul className="favorites">
-          <CatItem img={CAT1} />
-          <CatItem img={CAT2} />
+          {cats.map(cat => <CatItem key={cat} img={cat} />)}
         </ul>
       );
     }
@@ -71,18 +71,11 @@
         </div>
       );
     }
-    const Form = () => {
-      const [counter, setCounter] = React.useState(0);
-      console.log(counter);
-      function handleFormSubmit(e) {
-        e.preventDefault();
-        console.log("폼 전송됨")
-        setCounter(counter + 1);
-      }
+    const Form = (props) => {
       return (
-        <form>
+        <form onSubmit={props.onSubmit}>
           <input type="text" name="name" placeholder="영어 대사를 입력해주세요" />
-          <button type="submit" onClick={handleFormSubmit}>생성</button>
+          <button type="submit">생성</button>
         </form>
       );
     }
@@ -92,11 +85,18 @@
       );
     }
     const App = () => {
+      const [counter, setCounter] = React.useState(0);
+      console.log(counter);
 
+      function handleFormSubmit(e) {
+        e.preventDefault();
+        console.log("폼 전송됨")
+        setCounter(counter + 1);
+      }
       return (
         <div id="app">
-          <Title>1번째 고양이 가라사대2</Title>
-          <Form />
+          <Title>{counter}번째 고양이 가라사대2</Title>
+          <Form onSubmit={handleFormSubmit} />
           <MainCard />
           <Favorites />
         </div>
